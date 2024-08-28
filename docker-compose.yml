@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  web:
+    image: python:3.11-slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:Dedpsaf56!@localhost:5432/test_work_for_kode
+    depends_on:
+      - db
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Dedpsaf56!
+      POSTGRES_DB: test_work_for_kode
+    ports:
+      - "5432:5432"
